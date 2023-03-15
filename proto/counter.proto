@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package counter;
+
+message incrementBy {
+    int32 value = 1;
+}
+
+message status {
+    string message = 1;
+}
+
+service incrementCounter {
+    rpc increment (incrementBy) returns (status) {}
+}
