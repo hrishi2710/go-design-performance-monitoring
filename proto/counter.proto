@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package counter;
 
+option go_package = "./counter";
+
 message incrementBy {
     int32 value = 1;
 }
