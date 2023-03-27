@@ -7,6 +7,8 @@ import (
 	"log"
 	"net"
 
+	mutex "go-design-performance-monitoring/mutex"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -16,7 +18,6 @@ const grpcServerPort = "50055"
 
 type CounterServer struct {
 	pb.UnimplementedIncrementCounterServer
-	value int32
 }
 
 func (s *CounterServer) Increment(ctx context.Context, req *pb.IncrementBy) (*pb.Status, error) {
@@ -24,8 +25,8 @@ func (s *CounterServer) Increment(ctx context.Context, req *pb.IncrementBy) (*pb
 	if req.Value < 0 {
 		return nil, status.Errorf(codes.InvalidArgument, "Value cannot be negative")
 	}
-	s.value += req.Value
-	msg := fmt.Sprintf("Incremented value is %d", s.value)
+	result := mutex.Increment()
+	msg := fmt.Sprintf("Incremented value is %d", result)
 	return &pb.Status{Message: msg}, nil
 }
 
