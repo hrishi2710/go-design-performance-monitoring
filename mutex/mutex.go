@@ -7,9 +7,9 @@ var (
 	mutex sync.Mutex
 )
 
-func Increment() int{
+func Increment(incrementBy int) int{
 	mutex.Lock()
-	count++
+	count += incrementBy
 	mutex.Unlock()
 	return count
 }

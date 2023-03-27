@@ -25,7 +25,7 @@ func (s *CounterServer) Increment(ctx context.Context, req *pb.IncrementBy) (*pb
 	if req.Value < 0 {
 		return nil, status.Errorf(codes.InvalidArgument, "Value cannot be negative")
 	}
-	result := mutex.Increment()
+	result := mutex.Increment(int(req.Value))
 	msg := fmt.Sprintf("Incremented value is %d", result)
 	return &pb.Status{Message: msg}, nil
 }
