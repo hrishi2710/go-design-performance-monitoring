@@ -2,6 +2,7 @@
 FROM debian
 
 # Install dependencies
+RUN apt-get update && apt-get install -y procps
 RUN apt-get update && apt-get install -y ca-certificates gnupg2
 RUN gpg -k
 
